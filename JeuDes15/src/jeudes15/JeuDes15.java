@@ -4,6 +4,8 @@
  */
 package jeudes15;
 
+import jeudes15.models.GridModel;
+
 /**
  *
  * @author lechiero
@@ -14,6 +16,6 @@ public class JeuDes15 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       GridModel m = new GridModel();
     }
 }

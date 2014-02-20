@@ -1,3 +1,11 @@
 Manifest-Version: 1.0
 X-COMMENT: Main-Class will be added automatically by build
 
+Name: jeudes15.components.Token.class
+Java-Bean: True
+
+Name: jeudes15.components.Morpion.class
+Java-Bean: True
+
+Name: jeudes15.components.ClassicView.class
+Java-Bean: True

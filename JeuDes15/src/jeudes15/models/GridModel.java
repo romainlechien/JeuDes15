@@ -49,7 +49,6 @@ public class GridModel {
             jetons.add(null);
         }
         support = new PropertyChangeSupport(this);
-
         winner = 0;
         currentPlayer = DEFAULT_BEGINNER_PLAYER;
         init();
@@ -99,20 +98,26 @@ public class GridModel {
 
     public void setJetonSelected(int value) throws Exception {
 
+        JetonModel oldJeton = null;
+        JetonModel newJeton = null; 
         for (JetonModel jm : jetons) {
             if (jm.getValue() == value) {
+                oldJeton = jm;
                 if (currentPlayer == 1) {
                     jm.setState(TokenState.PLAYER1_SELECTED);
                     jetonsPlayer1.add(jm);
+                    newJeton = jm;
                 } else if (currentPlayer == 2) {
                     jm.setState(TokenState.PLAYER2_SELECTED);
                     jetonsPlayer2.add(jm);
+                    newJeton = jm;
                 } else {
                     throw new Exception("GridModel : CurrentPlayer non valide");
                 }
             }
         }
         nextPlayer();
+        support.firePropertyChange(JETON_PROPERTY, oldJeton, newJeton);
 
     }
 
@@ -124,6 +129,18 @@ public class GridModel {
         } else {
             throw new Exception("GridModel : CurrentPlayer non valide");
         }
+    }
+
+    public List<JetonModel> getJetons() {
+        return jetons;
+    }
+
+    public List<JetonModel> getJetonsPlayer1() {
+        return jetonsPlayer1;
+    }
+
+    public List<JetonModel> getJetonsPlayer2() {
+        return jetonsPlayer2;
     }
 
     public void addPropertyChangeListener(PropertyChangeListener pl) {
@@ -144,7 +161,15 @@ public class GridModel {
 
     
     
-    
+     public void newGame() {
+     
+        jetons = new ArrayList<>(); 
+        for (int i = 0 ; i < DEFAULT_GRID_NB_ITEMS ; i++){
+            jetons.add(new JetonModel(i+1));
+        }   
+        jetonsPlayer1 = new ArrayList<>();
+        jetonsPlayer2 = new ArrayList<>();
+    }
     
     
     

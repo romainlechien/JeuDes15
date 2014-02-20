@@ -57,6 +57,16 @@ public class Shape extends JComponent {
         return new Dimension(50, 50);
     }
 
+    @Override
+    public Dimension getMaximumSize() {
+        return new Dimension(100, 100); 
+    }
+
+    @Override
+    public Dimension getMinimumSize() {
+        return new Dimension(50, 50); 
+    }
+
      @Override
     public boolean contains(int x, int y) {
         switch (getShape()) {

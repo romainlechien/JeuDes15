@@ -18,6 +18,7 @@ import java.util.EventListener;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.event.EventListenerList;
+import jeudes15.models.JetonModel;
 import jeudes15.models.TokenState;
 
 /**
@@ -49,15 +50,21 @@ public class Token extends JLayeredPane {
     private int value;
     private Color color;
     private TokenState state;
+    private JetonModel model;
 
     public static final Dimension PREFERRED_SIZE = new Dimension(70, 70);
 
     public Token() {
-        this(DEFAULT_PIECE_VALUE, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
+        this(null,DEFAULT_PIECE_VALUE, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
     }
     
-    public Token(int value, Color color, TokenState state, int shapePick) {
+     public Token(JetonModel model) {
+        this(model,DEFAULT_PIECE_VALUE, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
+    }
+    
+    public Token(JetonModel model, int value, Color color, TokenState state, int shapePick) {
         super();
+        this.model = model;
         this.value = value;
         this.color = color;
         this.state = state;
@@ -120,7 +127,7 @@ public class Token extends JLayeredPane {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                fireShapeLabelClicked(new TokenEvent(Token.this));
+//                fireShapeLabelClicked(new TokenEvent(Token.this));
             }
         });
 
@@ -167,9 +174,9 @@ public class Token extends JLayeredPane {
     private void setPressed(boolean b) {
     }
 
-    private void fireShapeLabelClicked(TokenEvent shapeLabelEvent) {
+   /* private void fireShapeLabelClicked(TokenEvent shapeLabelEvent) {
         for (TokenListener listener : listeners.getListeners(TokenListener.class)) {
-            listener.shapeLabelClicked(shapeLabelEvent);
+          listener.shapeLabelClicked(shapeLabelEvent);
         }
     }
 
@@ -180,7 +187,7 @@ public class Token extends JLayeredPane {
     public void removeShapeLabelListener(TokenListener listener) {
         listeners.remove(TokenListener.class, listener);
     }
-    
+    */
     private void fireActionPerformed() {
             ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "");
             for (ActionListener listener : getListeners(ActionListener.class)) {

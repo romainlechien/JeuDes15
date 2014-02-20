@@ -7,10 +7,13 @@ package jeudes15.components;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import jeudes15.models.GridModel;
+import jeudes15.models.JetonModel;
 import jeudes15.models.TokenState;
 
 /**
@@ -25,6 +28,8 @@ public class ClassicView extends JComponent {
     private JPanel panelJoueur1;
     private JPanel panelJoueur2;
     
+    private GridModel model;
+    
     
     public ClassicView(){
         
@@ -37,9 +42,11 @@ public class ClassicView extends JComponent {
         
         // Panel Jetons (Haut)
         
+        List<JetonModel> listModels = model.getJetons();
+        
         panelJetons.setLayout(new GridLayout(1, 9, 2, 2));
         for(int i=1;i<10;i++){
-            temp = new Token(i, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
+            temp = new Token(listModels.get(i),i, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
             panelJetons.add(temp);
         }
         this.add(panelJetons);
@@ -53,14 +60,17 @@ public class ClassicView extends JComponent {
         
         
         panelJoueur1.setLayout(new GridLayout(1, 5, 2, 2));
+        
+        listModels = model.getJetonsPlayer1();
         for(int i=1;i<6;i++){
-            temp = new Token(i, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
+            temp = new Token(listModels.get(i),i, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
             panelJoueur1.add(temp);
         }
         
         panelJoueur2.setLayout(new GridLayout(1, 5, 2, 2));
+        listModels = model.getJetonsPlayer2();
         for(int i=1;i<6;i++){
-            temp = new Token(i, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
+            temp = new Token(listModels.get(i),i, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
             panelJoueur2.add(temp);
         }
         // Bordure sur les panels Joueur1 et Joueur2

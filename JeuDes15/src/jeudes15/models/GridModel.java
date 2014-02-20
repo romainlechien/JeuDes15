@@ -4,6 +4,7 @@
  */
 package jeudes15.models;
 
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.logging.Logger;
 import java.beans.PropertyChangeListener;

@@ -4,17 +4,42 @@
  */
 package jeudes15.components;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
+import jeudes15.models.JetonModel;
+
 /**
  *
  * @author duboisem
  */
 public class JeuDes15Frame extends javax.swing.JFrame {
 
+    private final PropertyChangeListener gridModelsListener;
+
     /**
      * Creates new form JeuDes15Frame
      */
     public JeuDes15Frame() {
-        initComponents();
+
+        this.gridModelsListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                updateGrid((List<JetonModel>) pce.getNewValue());
+
+            }
+    };
+
+    initComponents();
+    }
+
+private void updateGrid(List<JetonModel> list) {
+
+
+        if (list != null && !list.isEmpty()) {
+            for (JetonModel jm : list) {
+            }
+        }
     }
 
     /**
@@ -27,14 +52,10 @@ public class JeuDes15Frame extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        morpion1 = new jeudes15.components.Morpion();
-        classicView2 = new jeudes15.components.ClassicView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane1.addTab("Morpion", morpion1);
-        jTabbedPane1.addTab("Classic", classicView2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -44,7 +65,7 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -85,8 +106,6 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private jeudes15.components.ClassicView classicView2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private jeudes15.components.Morpion morpion1;
     // End of variables declaration//GEN-END:variables
 }

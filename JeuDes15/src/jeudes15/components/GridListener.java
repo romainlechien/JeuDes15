@@ -11,5 +11,5 @@ import java.util.EventListener;
  * @author duboisem
  */
 public interface GridListener extends EventListener {
-     void rowClicked(GridEvent event);
+    public void gridClicked(GridEvent event);
 }

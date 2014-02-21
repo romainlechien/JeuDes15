@@ -55,17 +55,17 @@ public class Token extends JLayeredPane {
     public static final Dimension PREFERRED_SIZE = new Dimension(70, 70);
 
     public Token() {
-        this(null,DEFAULT_PIECE_VALUE, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
+        this(null, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
     }
     
      public Token(JetonModel model) {
-        this(model,DEFAULT_PIECE_VALUE, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
+        this(model, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
     }
     
-    public Token(JetonModel model, int value, Color color, TokenState state, int shapePick) {
+    public Token(JetonModel model, Color color, TokenState state, int shapePick) {
         super();
         this.model = model;
-        this.value = value;
+        this.value = model.getValue();
         this.color = color;
         this.state = state;
         listeners = new EventListenerList();
@@ -188,15 +188,26 @@ public class Token extends JLayeredPane {
         listeners.remove(TokenListener.class, listener);
     }
     */
+    
     private void fireActionPerformed() {
             ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "");
             for (ActionListener listener : getListeners(ActionListener.class)) {
-                listener.actionPerformed(event);
+               listener.actionPerformed(event);
             }
         }
+    
+        public void addActionListener(ActionListener listener) {
+        this.listenerList.add(ActionListener.class, listener);
+    }
+
+    public void removeActionListener(ActionListener listener) {
+        this.listenerList.remove(ActionListener.class, listener);
+    }
     
     @Override
     public boolean contains(int x, int y) {
         return shape.contains(x, y);
     }
+    
+    
 }

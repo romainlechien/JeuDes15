@@ -7,6 +7,7 @@ package jeudes15.components;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import jeudes15.models.GridModel;
 import jeudes15.models.JetonModel;
 
 /**
@@ -16,30 +17,30 @@ import jeudes15.models.JetonModel;
 public class JeuDes15Frame extends javax.swing.JFrame {
 
     private final PropertyChangeListener gridModelsListener;
+    private GridModel model;
 
     /**
      * Creates new form JeuDes15Frame
      */
     public JeuDes15Frame() {
 
+        model = new GridModel();
         this.gridModelsListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                updateGrid((List<JetonModel>) pce.getNewValue());
+                updateGrids((List<JetonModel>) pce.getNewValue());
 
             }
-    };
-
-    initComponents();
+        };
+        initFrame();
     }
 
-private void updateGrid(List<JetonModel> list) {
-
-
+    private void updateGrids(List<JetonModel> list) {
         if (list != null && !list.isEmpty()) {
-            for (JetonModel jm : list) {
-            }
+            updateMorpion(list);
+            updateClassicView(list);
         }
+
     }
 
     /**
@@ -52,20 +53,26 @@ private void updateGrid(List<JetonModel> list) {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        classicView1 = new jeudes15.components.ClassicView();
+        morpion1 = new jeudes15.components.Morpion();
+        classicView2 = new jeudes15.components.ClassicView();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane1.addTab("tab1", classicView1);
+        jTabbedPane1.addTab("tab2", morpion1);
+        jTabbedPane1.addTab("tab3", classicView2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -106,6 +113,42 @@ private void updateGrid(List<JetonModel> list) {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private jeudes15.components.ClassicView classicView1;
+    private jeudes15.components.ClassicView classicView2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private jeudes15.components.Morpion morpion1;
     // End of variables declaration//GEN-END:variables
+
+    private void updateMorpion(List<JetonModel> list) {
+
+        for (JetonModel jm : list) {
+        }
+    }
+
+    private void updateClassicView(List<JetonModel> list) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void initFrame() {
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        classicView1 = new jeudes15.components.ClassicView(model);
+        morpion1 = new jeudes15.components.Morpion(model);
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane1.addTab("Classic View", classicView1);
+        jTabbedPane1.addTab("Tic Tac Toe", morpion1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE));
+        layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE));
+
+        pack();
+    }
 }

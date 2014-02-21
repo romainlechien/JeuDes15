@@ -25,6 +25,11 @@ public class Morpion extends JComponent {
     private Token temp;
     private GridModel model;
     
+    public Morpion(){
+        this(new GridModel());
+    }
+    
+    
     public Morpion(GridModel model){
         
         this.model = model;
@@ -34,12 +39,13 @@ public class Morpion extends JComponent {
         
         List<JetonModel> listModels = model.getJetons();
         
-        for(int i=1;i<10;i++){
-            temp = new Token(listModels.get(i), i, Color.green, TokenState.NOT_SELECTED, Shape.RECTANGLE);
+        for(int i = 0 ; i < 9 ; i++){
+            temp = new Token(listModels.get(i), Color.green, TokenState.NOT_SELECTED, Shape.RECTANGLE);
             temp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             this.add(temp);
         }
     }
+    
     
     public Dimension getPreferredSize() {
         return new Dimension(300,300);

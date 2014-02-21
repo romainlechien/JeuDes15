@@ -4,6 +4,8 @@
  */
 package jeudes15;
 
+import jeudes15.components.JeuDes15Frame;
+
 /**
  *
  * @author lechiero
@@ -72,7 +74,7 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                new JeuDes15Frame().setVisible(true);
             }
         });
     }

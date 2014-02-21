@@ -69,10 +69,6 @@ public class ClassicView extends JComponent {
 
         registerModel(model);
         initPanels();
-
-
-
-
     }
 
     private void registerModel(GridModel aModel) {

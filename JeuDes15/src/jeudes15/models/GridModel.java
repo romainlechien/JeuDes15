@@ -23,6 +23,7 @@ public class GridModel {
     private static final Logger LOG = Logger.getLogger(GridModel.class.getName());
     public static final String ENABLED_PROPERTY = "enabled";
     public static final String JETON_PROPERTY = "jeton";
+    public static final String ENDGAME_PROPERTY = "findujeu";
     private final PropertyChangeSupport support;
     private List<JetonModel> jetons;
     private int winner;
@@ -30,6 +31,7 @@ public class GridModel {
     private List<JetonModel> jetonsPlayer1;
     private List<JetonModel> jetonsPlayer2;
     private List<Integer> combiGagnante;
+    private boolean popUpEndGame;
 
     public GridModel() {
         this(DEFAULT_GRID_NB_ITEMS);
@@ -49,6 +51,7 @@ public class GridModel {
         support = new PropertyChangeSupport(this);
         winner = 0;
         currentPlayer = DEFAULT_BEGINNER_PLAYER;
+        popUpEndGame = false;
         // init();
         newGame();
     }
@@ -152,7 +155,6 @@ public class GridModel {
     }
 
     public void setJetonSelected(int value) throws Exception {
-
         GridModel oldModel = null;
         GridModel newModel = null;
 
@@ -162,22 +164,24 @@ public class GridModel {
                 if (currentPlayer == 1) {
                     jm.setState(TokenState.PLAYER1_SELECTED);
                     jetonsPlayer1.add(jm);
-                    newModel = new GridModel(this);
                     nextPlayer();
+                    newModel = new GridModel(this);
                     support.firePropertyChange(JETON_PROPERTY, oldModel, newModel);
                 } else if (currentPlayer == 2) {
                     jm.setState(TokenState.PLAYER2_SELECTED);
                     jetonsPlayer2.add(jm);
-                    newModel = new GridModel(this);
                     nextPlayer();
+                    newModel = new GridModel(this);
                     support.firePropertyChange(JETON_PROPERTY, oldModel, newModel);
                 } else {
                     throw new Exception("GridModel : CurrentPlayer non valide");
                 }
             }
         }
-
-
+        
+        if(isThereAWinner()||isThereAnEquality()){
+            support.firePropertyChange(ENDGAME_PROPERTY, oldModel, newModel);
+        }
     }
 
     private void nextPlayer() throws Exception {
@@ -222,22 +226,32 @@ public class GridModel {
 
         GridModel oldModel = null;
         GridModel newModel = null;
+        
 
         oldModel = new GridModel(this);
         currentPlayer = 1;
+        this.winner = 0;
         jetons = new ArrayList<>();
         for (int i = 1; i <= DEFAULT_GRID_NB_ITEMS; i++) {
             jetons.add(new JetonModel(i));
         }
         jetonsPlayer1 = new ArrayList<>();
         jetonsPlayer2 = new ArrayList<>();
-
+        combiGagnante = new ArrayList<>();
+        
         newModel = new GridModel(this);
-        System.out.println("C'est au joueur " + currentPlayer);
         support.firePropertyChange(JETON_PROPERTY, oldModel, newModel);
     }
 
     public List<Integer> getCombiGagnante() {
         return combiGagnante;
+    }
+    
+    public boolean isPopUpEndGameDisplayed(){
+        return popUpEndGame;
+    }
+    
+    public void setPopUpEndGameDisplayed(boolean val){
+        popUpEndGame = val;
     }
 }

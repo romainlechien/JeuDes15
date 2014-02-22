@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import jeudes15.models.GridModel;
@@ -83,11 +84,14 @@ public class ClassicView extends JComponent {
     }
 
     private void updateClassicView(GridModel grid) {
+        System.out.println("UpdateClassicView");
+        
         List<JetonModel> newJetons = grid.getJetons();
         List<JetonModel> player1 = grid.getJetonsPlayer1();
         List<JetonModel> player2 = grid.getJetonsPlayer2();
         List<Integer> player1SelectedJetons = grid.getPlayer1SelectedJetons();
         List<Integer> player2SelectedJetons = grid.getPlayer2SelectedJetons();
+        System.out.println("NB Jetons vides : " + newJetons.size() + "  ;  NB Jetons Joueurs 1 : " + player1.size() + "  ;  NB Jetons Joueurs 2 : " + player2.size());
         boolean equality = grid.isThereAnEquality();
         boolean isAWinner = grid.isThereAWinner();
         removeAll();
@@ -142,16 +146,6 @@ public class ClassicView extends JComponent {
             //Ajout au composant
             this.add(panelJetons);
             this.add(panelJoueurs);
-
-             Label l = null;
-            if (isAWinner){
-                //TODO pop up
-                 l = new Label("Le vainqueur est le joueur " + grid.whoIsTheWinner());
-            }
-            else if(equality){
-                //TODO pop up
-                l = new Label("Pas de vainqueur.");
-            }
 
         validate();
         repaint();

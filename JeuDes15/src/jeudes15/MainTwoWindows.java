@@ -45,9 +45,10 @@ public class MainTwoWindows {
             @Override
             public void run() {
                 JeuDes15Frame frame1 = new JeuDes15Frame();
-                JeuDes15Frame frame2 = new JeuDes15Frame();
+                JeuDes15Frame frame2 = new JeuDes15Frame(frame1.getModel());
                 
-                frame1.setModel(frame2.getModel());
+                //frame1.setModel(frame2.getModel());
+                //frame2.getModel().newGame();
                 
                 frame1.setVisible(true);
                 frame2.setVisible(true);

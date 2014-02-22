@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jeudes15.models.GridModel;
 import jeudes15.models.JetonModel;
@@ -88,6 +89,7 @@ public class Morpion extends JComponent {
     }
     
     private void updateMorpion(GridModel newGrid) {
+        System.out.println("UpdateMorpion");
 
         List<JetonModel> newJetons = newGrid.getJetons();
         newJetons = ordonnerListe(newJetons);
@@ -95,6 +97,7 @@ public class Morpion extends JComponent {
         List<Integer> player2SelectedJetons = newGrid.getPlayer2SelectedJetons();
         List<JetonModel> player1 = newGrid.getJetonsPlayer1();
         List<JetonModel> player2 = newGrid.getJetonsPlayer2();
+        System.out.println("NB Jetons vides : " + newJetons.size() + "  ;  NB Jetons Joueurs 1 : " + player1.size() + "  ;  NB Jetons Joueurs 2 : " + player2.size());
         boolean equality = newGrid.isThereAnEquality();
         boolean isAWinner = newGrid.isThereAWinner();
         removeAll();
@@ -112,16 +115,6 @@ public class Morpion extends JComponent {
                     jetonWidget.addActionListener(new JetonClickListener(model, temp));
                 }
                 this.add(jetonWidget);
-            }
-
-            Label l = null;
-            if (isAWinner){
-                //TODO pop up
-                 l = new Label("Le vainqueur est le joueur " + newGrid.whoIsTheWinner());
-            }
-            else if(equality){
-                //TODO pop up
-                l = new Label("Pas de vainqueur.");
             }
         validate();
         repaint();
@@ -149,6 +142,5 @@ public class Morpion extends JComponent {
     private void initPanel() {
         this.setLayout(new GridLayout(DEFAULT_SIZE_COL, DEFAULT_SIZE_COL, 3, 3));
         this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        updateMorpion(model);
     }
 }

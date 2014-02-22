@@ -7,6 +7,7 @@ package jeudes15.components;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 import jeudes15.models.GridModel;
 import jeudes15.models.JetonModel;
 
@@ -16,7 +17,7 @@ import jeudes15.models.JetonModel;
  */
 public class JeuDes15Frame extends javax.swing.JFrame {
 
-    private final PropertyChangeListener gridModelsListener;
+    private PropertyChangeListener endGamePropertyChangeListener;
     private GridModel model;
 
     /**
@@ -24,23 +25,33 @@ public class JeuDes15Frame extends javax.swing.JFrame {
      */
     public JeuDes15Frame() {
 
-        model = new GridModel();
-        this.gridModelsListener = new PropertyChangeListener() {
+        endGamePropertyChangeListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
-                updateGrids((List<JetonModel>) pce.getNewValue());
-
+                GridModel newGrid = (GridModel) pce.getNewValue();
+                updateJeuDes15(newGrid);
             }
         };
+        model = new GridModel();
+        this.model.addPropertyChangeListener(GridModel.ENDGAME_PROPERTY, endGamePropertyChangeListener);
         initFrame();
     }
 
-    private void updateGrids(List<JetonModel> list) {
-        if (list != null && !list.isEmpty()) {
-            updateMorpion(list);
-            updateClassicView(list);
-        }
+    /**
+     * Creates new form JeuDes15Frame
+     */
+    public JeuDes15Frame(GridModel modelCible) {
 
+        endGamePropertyChangeListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent pce) {
+                GridModel newGrid = (GridModel) pce.getNewValue();
+                updateJeuDes15(newGrid);
+            }
+        };
+        model = modelCible;
+        this.model.addPropertyChangeListener(GridModel.ENDGAME_PROPERTY, endGamePropertyChangeListener);
+        initFrame();
     }
 
     public GridModel getModel() {
@@ -49,6 +60,34 @@ public class JeuDes15Frame extends javax.swing.JFrame {
 
     public void setModel(GridModel model) {
         this.model = model;
+    }
+
+    private void updateJeuDes15(GridModel newGrid) {
+        if (newGrid.isThereAWinner()) {
+            createPopUpFinJeu("Le vainqueur est le joueur " + newGrid.whoIsTheWinner());
+        } else if (newGrid.isThereAnEquality()) {
+            createPopUpFinJeu("Pas de vainqueur.");
+        }
+    }
+
+    private void createPopUpFinJeu(String msgFin) {
+        Object[] options = {"Rejouer",
+            "Annuler"};
+        int popUpInfoEndGame = JOptionPane.showOptionDialog(this,
+                msgFin,
+                "Fin du jeu",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, //do not use a custom Icon
+                options, //the titles of buttons
+                options[0]); //default button title
+
+        if (popUpInfoEndGame == JOptionPane.YES_OPTION) {
+            System.out.println("NEW GAME");
+            model.newGame();
+        } else if (popUpInfoEndGame == JOptionPane.NO_OPTION) {
+            // Ne rien faire
+        }
     }
 
     /**
@@ -150,25 +189,15 @@ public class JeuDes15Frame extends javax.swing.JFrame {
     private jeudes15.components.Morpion morpion1;
     // End of variables declaration//GEN-END:variables
 
-    private void updateMorpion(List<JetonModel> list) {
+    private void initFrame() {
 
-        for (JetonModel jm : list) {
-        }
-    }
-
-    private void updateClassicView(List<JetonModel> list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void initFrame() {       
-        
         jTabbedPane1 = new javax.swing.JTabbedPane();
         classicView1 = new jeudes15.components.ClassicView();
         morpion1 = new jeudes15.components.Morpion();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_NewGame = new javax.swing.JMenuItem();
-        
+
         classicView1 = new jeudes15.components.ClassicView(model);
         morpion1 = new jeudes15.components.Morpion(model);
 
@@ -195,14 +224,15 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }
+
 }

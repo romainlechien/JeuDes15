@@ -43,6 +43,14 @@ public class JeuDes15Frame extends javax.swing.JFrame {
 
     }
 
+    public GridModel getModel() {
+        return model;
+    }
+
+    public void setModel(GridModel model) {
+        this.model = model;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,28 +63,49 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         classicView1 = new jeudes15.components.ClassicView();
         morpion1 = new jeudes15.components.Morpion();
-        classicView2 = new jeudes15.components.ClassicView();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mi_NewGame = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
         jTabbedPane1.addTab("tab1", classicView1);
         jTabbedPane1.addTab("tab2", morpion1);
-        jTabbedPane1.addTab("tab3", classicView2);
+
+        jMenu1.setText("Menu");
+
+        mi_NewGame.setText("New Game");
+        mi_NewGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_NewGameActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mi_NewGame);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mi_NewGameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mi_NewGameActionPerformed
+        model.newGame();
+    }//GEN-LAST:event_mi_NewGameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -114,8 +143,10 @@ public class JeuDes15Frame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private jeudes15.components.ClassicView classicView1;
-    private jeudes15.components.ClassicView classicView2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenuItem mi_NewGame;
     private jeudes15.components.Morpion morpion1;
     // End of variables declaration//GEN-END:variables
 
@@ -129,8 +160,15 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void initFrame() {
+    private void initFrame() {       
+        
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        classicView1 = new jeudes15.components.ClassicView();
+        morpion1 = new jeudes15.components.Morpion();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        mi_NewGame = new javax.swing.JMenuItem();
+        
         classicView1 = new jeudes15.components.ClassicView(model);
         morpion1 = new jeudes15.components.Morpion(model);
 
@@ -140,14 +178,30 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Classic View", classicView1);
         jTabbedPane1.addTab("Tic Tac Toe", morpion1);
 
+        jMenu1.setText("Menu");
+
+        mi_NewGame.setText("New Game");
+        mi_NewGame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mi_NewGameActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mi_NewGame);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }

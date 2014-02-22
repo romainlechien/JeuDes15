@@ -37,16 +37,7 @@ public class JetonClickListener implements ActionListener {
     }
     
     private void firePieceClicked(int jetonNumber) throws Exception {
-        System.out.println("number : " + jetonNumber);
         model.setJetonSelected(jetonNumber);
-        System.out.print("Joueur 1 :");
-        for(int i = 0 ; i < model.getJetonsPlayer1().size() ; i++){
-            System.out.print(model.getJetonsPlayer1().get(i).getValue() + " ,");
-        }
-        System.out.print("Joueur 2 :");
-        for(int i = 0 ; i < model.getJetonsPlayer2().size() ; i++){
-            System.out.print(model.getJetonsPlayer2().get(i).getValue() + " ,");
-        }
         GridEvent event = new GridEvent(this, jetonNumber);
         for (GridListener listener : eventListeners.getListeners(GridListener.class)) {
             listener.gridClicked(event);

@@ -9,5 +9,5 @@ package jeudes15.models;
  * @author duboisem
  */
 public enum TokenState {
-    NOT_SELECTED, PLAYER1_SELECTED, PLAYER2_SELECTED
+    NOT_SELECTED, PLAYER1_SELECTED, PLAYER2_SELECTED, PIECE_WIN_PLAYER1, PIECE_WIN_PLAYER2
 }

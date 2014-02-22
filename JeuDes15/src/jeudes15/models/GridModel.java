@@ -29,7 +29,7 @@ public class GridModel {
     private int currentPlayer;
     private List<JetonModel> jetonsPlayer1;
     private List<JetonModel> jetonsPlayer2;
-
+    private List<Integer> combiGagnante;
 
     public GridModel() {
         this(DEFAULT_GRID_NB_ITEMS);
@@ -44,6 +44,7 @@ public class GridModel {
         jetons = new ArrayList<>(nbitems);
         jetonsPlayer1 = new ArrayList<>();
         jetonsPlayer2 = new ArrayList<>();
+        combiGagnante = new ArrayList<>();
 
         support = new PropertyChangeSupport(this);
         winner = 0;
@@ -59,26 +60,43 @@ public class GridModel {
         this.currentPlayer = m.currentPlayer;
         this.jetonsPlayer1 = m.jetonsPlayer1;
         this.jetonsPlayer2 = m.jetonsPlayer2;
+        combiGagnante = new ArrayList<>();
     }
 
-   public List<Integer> getSelectedJetons(){
+    public List<Integer> getPlayer1SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
-        
-        for (int i = 0; i < jetonsPlayer1.size() ; i++){
+
+        for (int i = 0; i < jetonsPlayer1.size(); i++) {
             selectedJetons.add(jetonsPlayer1.get(i).getValue());
         }
-        
-        for (int i = 0; i < jetonsPlayer2.size() ; i++){
+        return selectedJetons;
+    }
+
+    public List<Integer> getPlayer2SelectedJetons() {
+        List<Integer> selectedJetons = new ArrayList<>();
+
+        for (int i = 0; i < jetonsPlayer2.size(); i++) {
             selectedJetons.add(jetonsPlayer2.get(i).getValue());
         }
-        
-        
         return selectedJetons;
-   }
-    
+    }
+
     public boolean isThereAWinner() {
         setWinner();
         return (winner != 0);
+    }
+
+    public boolean isThereAnEquality() {
+
+        List<Integer> selectedJetons = new ArrayList<>();
+        for (int i = 0; i < jetonsPlayer2.size(); i++) {
+            selectedJetons.add(jetonsPlayer2.get(i).getValue());
+        }
+        for (int i = 0; i < jetonsPlayer1.size(); i++) {
+            selectedJetons.add(jetonsPlayer1.get(i).getValue());
+        }
+
+        return (winner == 0 && selectedJetons.size() == 9);
     }
 
     public int whoIsTheWinner() {
@@ -94,6 +112,12 @@ public class GridModel {
                 for (int k = j + 1; k <= jetonsPlayer1.size() - 1 && !gagne; k++) {
                     if (resultCombi(jetonsPlayer1.get(i), jetonsPlayer1.get(j), jetonsPlayer1.get(k)) == 15) {
                         gagne = true;
+                        combiGagnante.add(jetonsPlayer1.get(i).getValue());
+                        combiGagnante.add(jetonsPlayer1.get(j).getValue());
+                        combiGagnante.add(jetonsPlayer1.get(k).getValue());
+                        jetonsPlayer1.get(i).setState(TokenState.PIECE_WIN_PLAYER1);
+                        jetonsPlayer1.get(j).setState(TokenState.PIECE_WIN_PLAYER1);
+                        jetonsPlayer1.get(k).setState(TokenState.PIECE_WIN_PLAYER1);
                     }
                 }
             }
@@ -107,6 +131,12 @@ public class GridModel {
                     for (int k = j + 1; k <= jetonsPlayer2.size() - 1 && !gagne; k++) {
                         if (resultCombi(jetonsPlayer2.get(i), jetonsPlayer2.get(j), jetonsPlayer2.get(k)) == 15) {
                             gagne = true;
+                            combiGagnante.add(jetonsPlayer2.get(i).getValue());
+                            combiGagnante.add(jetonsPlayer2.get(j).getValue());
+                            combiGagnante.add(jetonsPlayer2.get(k).getValue());
+                            jetonsPlayer2.get(i).setState(TokenState.PIECE_WIN_PLAYER2);
+                            jetonsPlayer2.get(j).setState(TokenState.PIECE_WIN_PLAYER2);
+                            jetonsPlayer2.get(k).setState(TokenState.PIECE_WIN_PLAYER2);
                         }
                     }
                 }
@@ -190,34 +220,24 @@ public class GridModel {
 
     public void newGame() {
 
+        GridModel oldModel = null;
+        GridModel newModel = null;
+
+        oldModel = new GridModel(this);
+        currentPlayer = 1;
         jetons = new ArrayList<>();
         for (int i = 1; i <= DEFAULT_GRID_NB_ITEMS; i++) {
             jetons.add(new JetonModel(i));
         }
         jetonsPlayer1 = new ArrayList<>();
         jetonsPlayer2 = new ArrayList<>();
+
+        newModel = new GridModel(this);
+        System.out.println("C'est au joueur " + currentPlayer);
+        support.firePropertyChange(JETON_PROPERTY, oldModel, newModel);
     }
 
-    private void init() {
-        jetonsPlayer1.add(new JetonModel(8));
-
-        jetonsPlayer1.add(new JetonModel(9));
-        jetonsPlayer1.add(new JetonModel(2));
-
-
-        jetonsPlayer2.add(new JetonModel(8));
-        jetonsPlayer2.add(new JetonModel(7));
-        jetonsPlayer2.add(new JetonModel(4));
-        jetonsPlayer2.add(new JetonModel(9));
-        System.out.println("le winner est le joueur numéro : " + whoIsTheWinner());
-        setWinner();
-        System.out.println("le winner est le joueur numéro : " + whoIsTheWinner());
-
-
-        jetonsPlayer1.add(new JetonModel(3));
-        jetonsPlayer1.add(new JetonModel(7));
-
-        setWinner();
-        System.out.println("le winner est le joueur numéro : " + whoIsTheWinner());
+    public List<Integer> getCombiGagnante() {
+        return combiGagnante;
     }
 }

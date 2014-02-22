@@ -20,6 +20,8 @@ import javax.swing.JLayeredPane;
 import javax.swing.event.EventListenerList;
 import jeudes15.models.JetonModel;
 import jeudes15.models.TokenState;
+import static jeudes15.models.TokenState.NOT_SELECTED;
+import static jeudes15.models.TokenState.PLAYER2_SELECTED;
 
 /**
  *
@@ -37,10 +39,10 @@ public class Token extends JLayeredPane {
     
     private static final int DEFAULT_SHAPE = Shape.OVALE;
     private static final int DEFAULT_PIECE_VALUE = 1;
-    private static final TokenState DEFAULT_PIECE_STATE = TokenState.NOT_SELECTED;
     private static final Color DEFAULT_PIECE_COLOR = Color.GREEN;
     private static final Color PLAYER1_SELECTED_COLOR = Color.RED;
-    private static final Color PLAYER2_SELECTED_COLOR = Color.YELLOW;
+    private static final Color PLAYER2_SELECTED_COLOR = Color.BLUE;
+    private static final Color PIECE_WIN_COLOR = Color.YELLOW;
     
     private final JLabel label;
     private int sizeText;
@@ -55,19 +57,18 @@ public class Token extends JLayeredPane {
     public static final Dimension PREFERRED_SIZE = new Dimension(70, 70);
 
     public Token() {
-        this(null, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
+        this(new JetonModel(DEFAULT_PIECE_VALUE), DEFAULT_SHAPE);
     }
     
      public Token(JetonModel model) {
-        this(model, DEFAULT_PIECE_COLOR, DEFAULT_PIECE_STATE, DEFAULT_SHAPE);
+        this(model,DEFAULT_SHAPE);
     }
     
-    public Token(JetonModel model, Color color, TokenState state, int shapePick) {
+    public Token(JetonModel model, int shapePick) {
         super();
         this.model = model;
-        this.value = model.getValue();
-        this.color = color;
-        this.state = state;
+        this.value = this.model.getValue();
+        this.state = this.model.getState();
         listeners = new EventListenerList();
         label = new JLabel(new Integer(value).toString());
         shape = new Shape(shapePick,Color.red);
@@ -131,6 +132,7 @@ public class Token extends JLayeredPane {
             }
         });
 
+        updateColor();
         add(shape, JLayeredPane.DEFAULT_LAYER);
         add(label, JLayeredPane.DRAG_LAYER);
         armedShape.setVisible(false);
@@ -207,6 +209,28 @@ public class Token extends JLayeredPane {
     @Override
     public boolean contains(int x, int y) {
         return shape.contains(x, y);
+    }
+
+    private void updateColor() {
+        switch(state){
+            case NOT_SELECTED : 
+                this.setBackgroundColor(DEFAULT_PIECE_COLOR);
+                break;
+            case PLAYER1_SELECTED : 
+                this.setBackgroundColor(PLAYER1_SELECTED_COLOR);
+                break;
+            case PLAYER2_SELECTED : 
+                this.setBackgroundColor(PLAYER2_SELECTED_COLOR);
+                break;
+            case PIECE_WIN_PLAYER1 : 
+                this.setBackgroundColor(PLAYER1_SELECTED_COLOR);
+                this.label.setForeground(PIECE_WIN_COLOR);
+                break;
+            case PIECE_WIN_PLAYER2 : 
+                this.setBackgroundColor(PLAYER2_SELECTED_COLOR);
+                this.label.setForeground(PIECE_WIN_COLOR);
+                break;
+        }
     }
     
     

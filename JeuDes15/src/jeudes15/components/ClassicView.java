@@ -28,7 +28,7 @@ import jeudes15.models.TokenState;
  */
 public class ClassicView extends JComponent {
 
-    private Token temp;
+   private Token temp;
     private JPanel panelJetons;
     private JPanel panelJoueurs;
     private JPanel panelJoueur1;
@@ -86,14 +86,15 @@ public class ClassicView extends JComponent {
         List<JetonModel> newJetons = grid.getJetons();
         List<JetonModel> player1 = grid.getJetonsPlayer1();
         List<JetonModel> player2 = grid.getJetonsPlayer2();
-        List<Integer> selectedJetons = grid.getSelectedJetons();
-        
+        List<Integer> player1SelectedJetons = grid.getPlayer1SelectedJetons();
+        List<Integer> player2SelectedJetons = grid.getPlayer2SelectedJetons();
+        boolean equality = grid.isThereAnEquality();
+        boolean isAWinner = grid.isThereAWinner();
         removeAll();
         panelJoueurs.removeAll();
         panelJetons.removeAll();
         panelJoueur1.removeAll();
         panelJoueur2.removeAll();
-        if (!grid.isThereAWinner()) {
 
             if (newJetons == null || newJetons.isEmpty()) {
                 throw new IllegalArgumentException("Trying to set the classicView with an empty model");
@@ -101,12 +102,15 @@ public class ClassicView extends JComponent {
 
             for (int i = 0; i < newJetons.size(); i++) {
                 JetonModel jeton = newJetons.get(i);
-                final Token jetonWidget = new Token(jeton, Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
+                final Token jetonWidget = new Token(jeton, Shape.OVALE);
 
-                jetonWidget.addActionListener(new JetonClickListener(model, jeton.getValue()));
+                if(!isAWinner){
+                    jetonWidget.addActionListener(new JetonClickListener(model, jeton.getValue()));
+                }
+                
 
-                Integer temp = jeton.getValue();
-                if (selectedJetons.contains(temp)) {
+                Integer temporaire = jeton.getValue();
+                if (player1SelectedJetons.contains(temporaire) || player2SelectedJetons.contains(temporaire)) {
                     jetonWidget.setVisible(false);
                     jetonWidget.setEnabled(false);
                 }
@@ -115,7 +119,7 @@ public class ClassicView extends JComponent {
 
             if (!player1.isEmpty()) {
                 for (int i = 0; i < player1.size(); i++) {
-                    temp = new Token(player1.get(i), Color.red, TokenState.PLAYER1_SELECTED, Shape.OVALE);
+                    temp = new Token(player1.get(i), Shape.OVALE);
                     panelJoueur1.add(temp);
                 }
                 for(int i=player1.size() ; i<5 ; i++){
@@ -125,7 +129,7 @@ public class ClassicView extends JComponent {
 
             if (!player2.isEmpty()) {
                 for (int i = 0; i < player2.size(); i++) {
-                    temp = new Token(player2.get(i), Color.yellow, TokenState.PLAYER2_SELECTED, Shape.OVALE);
+                    temp = new Token(player2.get(i), Shape.OVALE);
                     panelJoueur2.add(temp);
                 }
                 for(int i=player2.size() ; i<5 ; i++){
@@ -139,35 +143,15 @@ public class ClassicView extends JComponent {
             this.add(panelJetons);
             this.add(panelJoueurs);
 
-        } else {
-
-            if (!player1.isEmpty()) {
-                for (int i = 0; i < player1.size(); i++) {
-                    temp = new Token(player1.get(i), Color.red, TokenState.PLAYER1_SELECTED, Shape.OVALE);
-                    panelJoueur1.add(temp);
-                }
-                for(int i=player1.size() ; i<5 ; i++){
-                    panelJoueur1.add(new JLabel(""));
-                }
+             Label l = null;
+            if (isAWinner){
+                //TODO pop up
+                 l = new Label("Le vainqueur est le joueur " + grid.whoIsTheWinner());
             }
-
-            if (!player2.isEmpty()) {
-                for (int i = 0; i < player2.size(); i++) {
-                    temp = new Token(player2.get(i), Color.yellow, TokenState.PLAYER2_SELECTED, Shape.OVALE);
-                    panelJoueur2.add(temp);
-                }
-                for(int i=player2.size() ; i<5 ; i++){
-                    panelJoueur2.add(new JLabel(""));
-                }
+            else if(equality){
+                //TODO pop up
+                l = new Label("Pas de vainqueur.");
             }
-            Label l = new Label("Le vainqueur est le joueur " + grid.whoIsTheWinner());
-           
-            panelJoueurs.add(panelJoueur1);
-            panelJoueurs.add(panelJoueur2);
-
-            this.add(panelJoueurs);
-            this.add(l);
-        }
 
         validate();
         repaint();

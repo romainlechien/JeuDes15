@@ -9,7 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.swing.JOptionPane;
 import jeudes15.models.GridModel;
-import jeudes15.models.JetonModel;
+import jeudes15.models.TokenModel;
 
 /**
  *

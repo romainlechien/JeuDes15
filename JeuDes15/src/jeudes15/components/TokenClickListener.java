@@ -15,7 +15,7 @@ import jeudes15.models.GridModel;
  *
  * @author Emilien Dubois et Romain Lechien
  */
-public class JetonClickListener implements ActionListener {
+public class TokenClickListener implements ActionListener {
     
     private final int jetonNumber;
     private final EventListenerList eventListeners;
@@ -26,7 +26,7 @@ public class JetonClickListener implements ActionListener {
      * @param model : Le modele général de l'application
      * @param jetonNumber : la valeur du jeton
      */
-    JetonClickListener(GridModel model, int jetonNumber) {
+    TokenClickListener(GridModel model, int jetonNumber) {
         this.model = model;
         this.jetonNumber = jetonNumber;
         eventListeners = new EventListenerList();
@@ -37,7 +37,7 @@ public class JetonClickListener implements ActionListener {
         try {
             firePieceClicked(jetonNumber);
         } catch (Exception ex) {
-            Logger.getLogger(JetonClickListener.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TokenClickListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**

@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import jeudes15.models.GridModel;
-import jeudes15.models.JetonModel;
+import jeudes15.models.TokenModel;
 
 /**
  *
@@ -97,8 +97,8 @@ public class Morpion extends JComponent {
      * @param l : la liste à ordonner
      * @return la liste ordonnée
      */
-    private List<JetonModel> ordonnerListe(List<JetonModel> l){
-        List<JetonModel> listResult = new ArrayList<>();
+    private List<TokenModel> ordonnerListe(List<TokenModel> l){
+        List<TokenModel> listResult = new ArrayList<>();
         
         for (int i = 0; i < this.placementJetons.size() ; i++){
             for (int j = 0; j < l.size(); j++){
@@ -117,20 +117,18 @@ public class Morpion extends JComponent {
      * @param grid : Le modele à utiliser pour mettre à jour la fenetre
      */
     private void updateMorpion(GridModel newGrid) {
-        System.out.println("UpdateMorpion");
 
-        List<JetonModel> newJetons = newGrid.getJetons();
+        List<TokenModel> newJetons = newGrid.getJetons();
         newJetons = ordonnerListe(newJetons);
         List<Integer> player1SelectedJetons = newGrid.getPlayer1SelectedJetons();
         List<Integer> player2SelectedJetons = newGrid.getPlayer2SelectedJetons();
-        List<JetonModel> player1 = newGrid.getJetonsPlayer1();
-        List<JetonModel> player2 = newGrid.getJetonsPlayer2();
-        System.out.println("NB Jetons vides : " + newJetons.size() + "  ;  NB Jetons Joueurs 1 : " + player1.size() + "  ;  NB Jetons Joueurs 2 : " + player2.size());
+        List<TokenModel> player1 = newGrid.getJetonsPlayer1();
+        List<TokenModel> player2 = newGrid.getJetonsPlayer2();
         boolean equality = newGrid.isThereAnEquality();
         boolean isAWinner = newGrid.isThereAWinner();
         removeAll();
         Token jetonWidget = null;
-        JetonModel jeton = null;
+        TokenModel jeton = null;
         Integer temp = 0;
  
 
@@ -140,7 +138,7 @@ public class Morpion extends JComponent {
                 jetonWidget = new Token(jeton, Shape.RECTANGLE);
                 jetonWidget.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 if (!isAWinner && !player1SelectedJetons.contains(temp) && !player2SelectedJetons.contains(temp)) {
-                    jetonWidget.addActionListener(new JetonClickListener(model, temp));
+                    jetonWidget.addActionListener(new TokenClickListener(model, temp));
                 }
                 this.add(jetonWidget);
             }

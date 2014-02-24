@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import jeudes15.models.GridModel;
-import jeudes15.models.JetonModel;
+import jeudes15.models.TokenModel;
 
 /**
  *
@@ -118,14 +118,12 @@ public class ClassicView extends JComponent {
      * @param grid : Le modele à utiliser pour mettre à jour la fenetre
      */
     private void updateClassicView(GridModel grid) {
-        System.out.println("UpdateClassicView");
         
-        List<JetonModel> newJetons = grid.getJetons();
-        List<JetonModel> player1 = grid.getJetonsPlayer1();
-        List<JetonModel> player2 = grid.getJetonsPlayer2();
+        List<TokenModel> newJetons = grid.getJetons();
+        List<TokenModel> player1 = grid.getJetonsPlayer1();
+        List<TokenModel> player2 = grid.getJetonsPlayer2();
         List<Integer> player1SelectedJetons = grid.getPlayer1SelectedJetons();
         List<Integer> player2SelectedJetons = grid.getPlayer2SelectedJetons();
-        System.out.println("NB Jetons vides : " + newJetons.size() + "  ;  NB Jetons Joueurs 1 : " + player1.size() + "  ;  NB Jetons Joueurs 2 : " + player2.size());
         boolean equality = grid.isThereAnEquality();
         boolean isAWinner = grid.isThereAWinner();
         removeAll();
@@ -139,11 +137,11 @@ public class ClassicView extends JComponent {
             }
 
             for (int i = 0; i < newJetons.size(); i++) {
-                JetonModel jeton = newJetons.get(i);
+                TokenModel jeton = newJetons.get(i);
                 final Token jetonWidget = new Token(jeton, Shape.OVALE);
 
                 if(!isAWinner){
-                    jetonWidget.addActionListener(new JetonClickListener(model, jeton.getValue()));
+                    jetonWidget.addActionListener(new TokenClickListener(model, jeton.getValue()));
                 }
                 
 

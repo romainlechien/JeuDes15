@@ -43,11 +43,11 @@ public class GridModel {
     /*******************************</*Constantes*>***************************************************/
     
     private final PropertyChangeSupport support;
-    private List<JetonModel> jetons;
+    private List<TokenModel> jetons;
     private int winner;
     private int currentPlayer;
-    private List<JetonModel> jetonsPlayer1;
-    private List<JetonModel> jetonsPlayer2;
+    private List<TokenModel> jetonsPlayer1;
+    private List<TokenModel> jetonsPlayer2;
     private List<Integer> combiGagnante;
     private boolean popUpEndGame;
 
@@ -198,7 +198,7 @@ public class GridModel {
     /*
      * Calcule la somme d'une combinaison de 3 jetons
      */
-   private int resultCombi(JetonModel get, JetonModel get0, JetonModel get1) {
+   private int resultCombi(TokenModel get, TokenModel get0, TokenModel get1) {
         return (get.getValue() + get0.getValue() + get1.getValue());
     }
 
@@ -211,7 +211,7 @@ public class GridModel {
         GridModel oldModel = null;
         GridModel newModel = null;
 
-        for (JetonModel jm : jetons) {
+        for (TokenModel jm : jetons) {
             if (jm.getValue() == value) {
                 oldModel = new GridModel(this);
                 if (currentPlayer == 1) {
@@ -255,21 +255,21 @@ public class GridModel {
     /**
      * @return la liste générale de jetons
      */
-    public List<JetonModel> getJetons() {
+    public List<TokenModel> getJetons() {
         return jetons;
     }
 
     /**
      * @return la liste des jetons sélectionnés par le joueur 1
      */
-    public List<JetonModel> getJetonsPlayer1() {
+    public List<TokenModel> getJetonsPlayer1() {
         return jetonsPlayer1;
     }
 
     /**
      * @return la liste des jetons sélectionnés par le joueur 2
      */
-    public List<JetonModel> getJetonsPlayer2() {
+    public List<TokenModel> getJetonsPlayer2() {
         return jetonsPlayer2;
     }
 
@@ -321,7 +321,7 @@ public class GridModel {
         this.winner = 0;
         jetons = new ArrayList<>();
         for (int i = 1; i <= DEFAULT_GRID_NB_ITEMS; i++) {
-            jetons.add(new JetonModel(i));
+            jetons.add(new TokenModel(i));
         }
         jetonsPlayer1 = new ArrayList<>();
         jetonsPlayer2 = new ArrayList<>();

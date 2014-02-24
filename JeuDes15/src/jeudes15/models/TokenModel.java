@@ -8,7 +8,7 @@ package jeudes15.models;
  *
  * @author Emilien Dubois et Romain Lechien
  */
-public class JetonModel {
+public class TokenModel {
     
     /**
      *  Etat par défaut d'un jeton
@@ -23,7 +23,7 @@ public class JetonModel {
      *  Constructeur partiel
      * @param value : valeur du jeton
      */
-    public JetonModel(int value){
+    public TokenModel(int value){
         this(value, DEFAULT_STATE);
     }
        
@@ -32,7 +32,7 @@ public class JetonModel {
      * @param value : valeur du jeton
      * @param state : Etat du jeton
      */
-    public JetonModel(int value, TokenState state) {
+    public TokenModel(int value, TokenState state) {
         this.value = value;
         this.state = state;
     }

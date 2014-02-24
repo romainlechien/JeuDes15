@@ -10,12 +10,12 @@ import java.beans.*;
  *
  * @author Emilien Dubois et Romain Lechien
  */
-public class JetonModelBeanInfo extends SimpleBeanInfo {
+public class TokenModelBeanInfo extends SimpleBeanInfo {
 
     // Bean descriptor//GEN-FIRST:BeanDescriptor
     /*lazy BeanDescriptor*/
     private static BeanDescriptor getBdescriptor(){
-        BeanDescriptor beanDescriptor = new BeanDescriptor  ( jeudes15.models.JetonModel.class , null ); // NOI18N//GEN-HEADEREND:BeanDescriptor
+        BeanDescriptor beanDescriptor = new BeanDescriptor  ( jeudes15.models.TokenModel.class , null ); // NOI18N//GEN-HEADEREND:BeanDescriptor
 
         // Here you can add code for customizing the BeanDescriptor.
 
@@ -30,8 +30,8 @@ public class JetonModelBeanInfo extends SimpleBeanInfo {
         PropertyDescriptor[] properties = new PropertyDescriptor[2];
     
         try {
-            properties[PROPERTY_state] = new PropertyDescriptor ( "state", jeudes15.models.JetonModel.class, "getState", "setState" ); // NOI18N
-            properties[PROPERTY_value] = new PropertyDescriptor ( "value", jeudes15.models.JetonModel.class, "getValue", "setValue" ); // NOI18N
+            properties[PROPERTY_state] = new PropertyDescriptor ( "state", jeudes15.models.TokenModel.class, "getState", "setState" ); // NOI18N
+            properties[PROPERTY_value] = new PropertyDescriptor ( "value", jeudes15.models.TokenModel.class, "getValue", "setValue" ); // NOI18N
         }
         catch(IntrospectionException e) {
             e.printStackTrace();

@@ -18,7 +18,7 @@ import java.util.EventListener;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.event.EventListenerList;
-import jeudes15.models.JetonModel;
+import jeudes15.models.TokenModel;
 import jeudes15.models.TokenState;
 import static jeudes15.models.TokenState.NOT_SELECTED;
 import static jeudes15.models.TokenState.PLAYER2_SELECTED;
@@ -46,20 +46,20 @@ public class Token extends JLayeredPane {
     private int value;
     private Color color;
     private TokenState state;
-    private JetonModel model;
+    private TokenModel model;
 
     /**
      * Constructeur par défaut
      */
     public Token() {
-        this(new JetonModel(DEFAULT_PIECE_VALUE), DEFAULT_SHAPE);
+        this(new TokenModel(DEFAULT_PIECE_VALUE), DEFAULT_SHAPE);
     }
     
      /**
      * Constructeur prenant en parametre le modele utilisé dans le jeton
      * @param model : le modele du jeton
      */
-    public Token(JetonModel model) {
+    public Token(TokenModel model) {
         this(model,DEFAULT_SHAPE);
     }
     
@@ -68,7 +68,7 @@ public class Token extends JLayeredPane {
      * @param model : le modele du jeton
      * @param shapePick : la forme
      */
-    public Token(JetonModel model, int shapePick) {
+    public Token(TokenModel model, int shapePick) {
         super();
         this.model = model;
         this.value = this.model.getValue();

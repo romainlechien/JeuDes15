@@ -61,7 +61,7 @@ public class GridModel {
 
     /**
      *  Constructeur à partir d'un nombre de jetons
-     * @param nbitems
+     * @param nbitems : nombre de jetons
      * 
      */
     public GridModel(int nbitems) {
@@ -81,7 +81,7 @@ public class GridModel {
 
     /**
      *  Constructeur par copie
-     * @param m
+     * @param m : GridModel à recopier
      */
     public GridModel(GridModel m) {
         this.support = m.support;
@@ -94,8 +94,7 @@ public class GridModel {
     }
 
     /**
-     *  Retourne la liste des jetons sélectionnés par le joueur 1
-     * @return selectedJetons
+     * @return la liste des valeurs des jetons sélectionnés par le joueur 1
      */
     public List<Integer> getPlayer1SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
@@ -107,8 +106,7 @@ public class GridModel {
     }
 
     /**
-     *  Retourne la liste des jetons sélectionnés par le joueur 2
-     * @return selectedJetons
+     * @return la liste des valeurs des jetons sélectionnés par le joueur 2
      */
     public List<Integer> getPlayer2SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
@@ -120,9 +118,9 @@ public class GridModel {
     }
 
     /**
-     *  Retourne si un des deux joueurs a gagné la partie
-     *  Met à jour la variable winner qui contient le numéro du joueur ayant gagné. winner vaut 0 si personne n'a gagné
-     * @return true || false
+     *  Met à jour la variable winner qui contient le numéro du joueur ayant gagné. 
+     *  winner vaut 0 si personne n'a gagné
+     * @return true si un des deux joueurs a gagné la partie
      */
     public boolean isThereAWinner() {
         setWinner();
@@ -130,8 +128,8 @@ public class GridModel {
     }
 
     /**
-     *  Retourne si oui ou non, il y a une égalité et que la partie est finie
-     * @return true || false
+     *  Vérifie s'il y a une égalité
+     * @return Retourne si oui ou non, il y a une égalité et que la partie est finie
      */
     public boolean isThereAnEquality() {
 
@@ -147,8 +145,7 @@ public class GridModel {
     }
 
     /**
-     *  Retourne le numéro du gagnant. S'il y en a pas, renvoit 0;
-     * @return winner
+     * @return le numéro du gagnant. S'il y en a pas, renvoit 0;
      */
     public int whoIsTheWinner() {
         return winner;
@@ -206,9 +203,9 @@ public class GridModel {
     }
 
     /**
-     *
-     * @param value
-     * @throws Exception
+     *  Traite toutes les modifications induites par la sélection d'un jeton
+     * @param value : valeur d'un jeton
+     * @throws Exception : dans le cas où le currentPlayer n'est pas correct. 
      */
     public void setJetonSelected(int value) throws Exception {
         GridModel oldModel = null;
@@ -240,6 +237,11 @@ public class GridModel {
         }
     }
 
+    /**
+     * Alterne le joueur courant. 
+     * Cela fait passer currentPlayer de 1 à 2 et inversement.
+     * @throws Exception 
+     */
     private void nextPlayer() throws Exception {
         if (currentPlayer == 1) {
             currentPlayer = 2;
@@ -251,65 +253,62 @@ public class GridModel {
     }
 
     /**
-     *
-     * @return
+     * @return la liste générale de jetons
      */
     public List<JetonModel> getJetons() {
         return jetons;
     }
 
     /**
-     *
-     * @return
+     * @return la liste des jetons sélectionnés par le joueur 1
      */
     public List<JetonModel> getJetonsPlayer1() {
         return jetonsPlayer1;
     }
 
     /**
-     *
-     * @return
+     * @return la liste des jetons sélectionnés par le joueur 2
      */
     public List<JetonModel> getJetonsPlayer2() {
         return jetonsPlayer2;
     }
 
     /**
-     *
-     * @param pl
+     * Ajoute un listener de changement de propriétés
+     * @param pl : PropertyChangeListener
      */
     public void addPropertyChangeListener(PropertyChangeListener pl) {
         support.addPropertyChangeListener(pl);
     }
 
     /**
-     *
-     * @param pl
+     *  Retire un listener de changement de propriétés
+     * @param pl : PropertyChangeListener
      */
     public void removePropertyChangeListener(PropertyChangeListener pl) {
         support.removePropertyChangeListener(pl);
     }
 
     /**
-     *
-     * @param string
-     * @param pl
+     *  Ajoute un listener de changement de propriétés
+     * @param string : String
+     * @param pl : PropertyChangeListener
      */
     public void addPropertyChangeListener(String string, PropertyChangeListener pl) {
         support.addPropertyChangeListener(string, pl);
     }
 
     /**
-     *
-     * @param string
-     * @param pl
+     * Retire un listener de changement de propriétés
+     * @param string : String
+     * @param pl : PropertyChangeListener
      */
     public void removePropertyChangeListener(String string, PropertyChangeListener pl) {
         support.removePropertyChangeListener(string, pl);
     }
 
     /**
-     *
+     * Initialise une nouvelle partie
      */
     public void newGame() {
 
@@ -332,15 +331,15 @@ public class GridModel {
     }
   
     /**
-     *
-     * @return
+     *  Exprime s'il faut afficher la pop-up de fin de partie
+     * @return oui ou non 
      */
     public boolean isPopUpEndGameDisplayed(){
         return popUpEndGame;
     }
     
     /**
-     *
+     *  Définie s'il faut afficher une pop-up ou non
      * @param val
      */
     public void setPopUpEndGameDisplayed(boolean val){

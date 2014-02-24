@@ -5,21 +5,16 @@
 package jeudes15.components;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Label;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import jeudes15.models.GridModel;
 import jeudes15.models.JetonModel;
-import jeudes15.models.TokenState;
 
 /**
  *
@@ -28,7 +23,6 @@ import jeudes15.models.TokenState;
 public class Morpion extends JComponent {
 
     private PropertyChangeListener gridPropertyChangeListener;
-    private PropertyChangeListener enabledPropertyChangeListener;
     private static final int DEFAULT_SIZE_COL = 3;
     private GridModel model;
     private List<Integer> placementJetons;
@@ -55,17 +49,6 @@ public class Morpion extends JComponent {
             public void propertyChange(PropertyChangeEvent pce) {
                 GridModel newGrid = (GridModel) pce.getNewValue();
                 updateMorpion(newGrid);
-            }
-        };
-
-        enabledPropertyChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-                boolean enabled = (boolean) pce.getNewValue();
-                for (Component widget : getComponents()) {
-                    widget.setEnabled(enabled);
-                }
-                repaint();
             }
         };
 
@@ -135,7 +118,6 @@ public class Morpion extends JComponent {
     private void registerModel(GridModel aModel) {
         model = aModel;
         this.model.addPropertyChangeListener(GridModel.JETON_PROPERTY, gridPropertyChangeListener);
-        this.model.addPropertyChangeListener(GridModel.ENABLED_PROPERTY, enabledPropertyChangeListener);
         updateMorpion(model);
     }
 

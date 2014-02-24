@@ -4,24 +4,18 @@
  */
 package jeudes15.components;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Label;
-import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import jeudes15.models.GridModel;
 import jeudes15.models.JetonModel;
-import jeudes15.models.TokenState;
 
 /**
  *
@@ -36,7 +30,6 @@ public class ClassicView extends JComponent {
     private JPanel panelJoueur2;
     private GridModel model;
     private PropertyChangeListener gridPropertyChangeListener;
-    private PropertyChangeListener enabledPropertyChangeListener;
 
     public ClassicView() {
         this(new GridModel());
@@ -57,17 +50,6 @@ public class ClassicView extends JComponent {
             }
         };
 
-        enabledPropertyChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-                boolean enabled = (boolean) pce.getNewValue();
-                for (Component widget : getComponents()) {
-                    widget.setEnabled(enabled);
-                }
-                repaint();
-            }
-        };
-
         registerModel(model);
         initPanels();
     }
@@ -75,7 +57,6 @@ public class ClassicView extends JComponent {
     private void registerModel(GridModel aModel) {
         model = aModel;
         this.model.addPropertyChangeListener(GridModel.JETON_PROPERTY, gridPropertyChangeListener);
-        this.model.addPropertyChangeListener(GridModel.ENABLED_PROPERTY, enabledPropertyChangeListener);
         updateClassicView(model);
     }
 

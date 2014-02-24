@@ -17,31 +17,31 @@ import java.util.ArrayList;
  */
 public class GridModel {
 
+    /*******************************<*Constantes*>***************************************************/
     /**
-     *
+     *  Nombre de jetons à disposer sur la grille pour une partie par défaut
      */
     public static final int DEFAULT_GRID_NB_ITEMS = 9;
+   
     /**
-     *
+     *  Joueur commençant à jouer pour une partie par défaut
      */
     public static final int DEFAULT_BEGINNER_PLAYER = 1;
+      
     /**
-     *
-     */
-    public static final boolean DEFAULT_ENABLED = true;
-    private static final Logger LOG = Logger.getLogger(GridModel.class.getName());
-    /**
-     *
-     */
-    public static final String ENABLED_PROPERTY = "enabled";
-    /**
-     *
+     *  Définition de la propriété JETON, utilisée à chaque modification du model d'un jeton
      */
     public static final String JETON_PROPERTY = "jeton";
+   
     /**
-     *
+     *  Définition de la propriété ENDGAME, utilisée lorsque la fin de partie survient
      */
     public static final String ENDGAME_PROPERTY = "findujeu";
+    
+    private static final Logger LOG = Logger.getLogger(GridModel.class.getName());    
+   
+    /*******************************</*Constantes*>***************************************************/
+    
     private final PropertyChangeSupport support;
     private List<JetonModel> jetons;
     private int winner;
@@ -52,26 +52,19 @@ public class GridModel {
     private boolean popUpEndGame;
 
     /**
-     *
+     *  Constructeur par défaut
      */
     public GridModel() {
         this(DEFAULT_GRID_NB_ITEMS);
     }
 
-    /**
-     *
-     * @param nbitems
-     */
-    public GridModel(int nbitems) {
-        this(nbitems, DEFAULT_ENABLED);
-    }
 
     /**
-     *
+     *  Constructeur à partir d'un nombre de jetons
      * @param nbitems
-     * @param theEnabled
+     * 
      */
-    public GridModel(int nbitems, boolean theEnabled) {
+    public GridModel(int nbitems) {
 
         jetons = new ArrayList<>(nbitems);
         jetonsPlayer1 = new ArrayList<>();
@@ -87,7 +80,7 @@ public class GridModel {
     }
 
     /**
-     *
+     *  Constructeur par copie
      * @param m
      */
     public GridModel(GridModel m) {
@@ -101,8 +94,8 @@ public class GridModel {
     }
 
     /**
-     *
-     * @return
+     *  Retourne la liste des jetons sélectionnés par le joueur 1
+     * @return selectedJetons
      */
     public List<Integer> getPlayer1SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
@@ -114,8 +107,8 @@ public class GridModel {
     }
 
     /**
-     *
-     * @return
+     *  Retourne la liste des jetons sélectionnés par le joueur 2
+     * @return selectedJetons
      */
     public List<Integer> getPlayer2SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
@@ -127,8 +120,9 @@ public class GridModel {
     }
 
     /**
-     *
-     * @return
+     *  Retourne si un des deux joueurs a gagné la partie
+     *  Met à jour la variable winner qui contient le numéro du joueur ayant gagné. winner vaut 0 si personne n'a gagné
+     * @return true || false
      */
     public boolean isThereAWinner() {
         setWinner();
@@ -136,8 +130,8 @@ public class GridModel {
     }
 
     /**
-     *
-     * @return
+     *  Retourne si oui ou non, il y a une égalité et que la partie est finie
+     * @return true || false
      */
     public boolean isThereAnEquality() {
 
@@ -153,15 +147,18 @@ public class GridModel {
     }
 
     /**
-     *
-     * @return
+     *  Retourne le numéro du gagnant. S'il y en a pas, renvoit 0;
+     * @return winner
      */
     public int whoIsTheWinner() {
         return winner;
     }
 
     /**
-     *
+     *  Met à jour la variable winner.
+     *  Si le joueur 1 a gagné, winner vaudra 1, 
+     *  sinon si le joueur 2 a gagné winner vaudra 2
+     *  sinon winner vaudra 0 car personne n'a gagné.
      */
     public void setWinner() {
 
@@ -172,9 +169,6 @@ public class GridModel {
                 for (int k = j + 1; k <= jetonsPlayer1.size() - 1 && !gagne; k++) {
                     if (resultCombi(jetonsPlayer1.get(i), jetonsPlayer1.get(j), jetonsPlayer1.get(k)) == 15) {
                         gagne = true;
-                        combiGagnante.add(jetonsPlayer1.get(i).getValue());
-                        combiGagnante.add(jetonsPlayer1.get(j).getValue());
-                        combiGagnante.add(jetonsPlayer1.get(k).getValue());
                         jetonsPlayer1.get(i).setState(TokenState.PIECE_WIN_PLAYER1);
                         jetonsPlayer1.get(j).setState(TokenState.PIECE_WIN_PLAYER1);
                         jetonsPlayer1.get(k).setState(TokenState.PIECE_WIN_PLAYER1);
@@ -191,9 +185,6 @@ public class GridModel {
                     for (int k = j + 1; k <= jetonsPlayer2.size() - 1 && !gagne; k++) {
                         if (resultCombi(jetonsPlayer2.get(i), jetonsPlayer2.get(j), jetonsPlayer2.get(k)) == 15) {
                             gagne = true;
-                            combiGagnante.add(jetonsPlayer2.get(i).getValue());
-                            combiGagnante.add(jetonsPlayer2.get(j).getValue());
-                            combiGagnante.add(jetonsPlayer2.get(k).getValue());
                             jetonsPlayer2.get(i).setState(TokenState.PIECE_WIN_PLAYER2);
                             jetonsPlayer2.get(j).setState(TokenState.PIECE_WIN_PLAYER2);
                             jetonsPlayer2.get(k).setState(TokenState.PIECE_WIN_PLAYER2);
@@ -207,7 +198,10 @@ public class GridModel {
         }
     }
 
-    private int resultCombi(JetonModel get, JetonModel get0, JetonModel get1) {
+    /*
+     * Calcule la somme d'une combinaison de 3 jetons
+     */
+   private int resultCombi(JetonModel get, JetonModel get0, JetonModel get1) {
         return (get.getValue() + get0.getValue() + get1.getValue());
     }
 
@@ -332,20 +326,11 @@ public class GridModel {
         }
         jetonsPlayer1 = new ArrayList<>();
         jetonsPlayer2 = new ArrayList<>();
-        combiGagnante = new ArrayList<>();
         
         newModel = new GridModel(this);
         support.firePropertyChange(JETON_PROPERTY, oldModel, newModel);
     }
-
-    /**
-     *
-     * @return
-     */
-    public List<Integer> getCombiGagnante() {
-        return combiGagnante;
-    }
-    
+  
     /**
      *
      * @return

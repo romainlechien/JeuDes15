@@ -27,10 +27,18 @@ public class Morpion extends JComponent {
     private GridModel model;
     private List<Integer> placementJetons;
 
+    /**
+     * Constructeur par défaut
+     */
     public Morpion() {
         this(new GridModel());
     }
 
+
+    /**
+     * Construcuteur permettant d'initialiser le composant avec le modele passé en parametre.
+     * @param model
+     */
     public Morpion(GridModel model) {
 
         placementJetons = new ArrayList<>();
@@ -56,6 +64,39 @@ public class Morpion extends JComponent {
         initPanel();
     }
 
+    /**
+     * Méthode d'enregistrement du model dans le composant et d'abonnement à la proprieté JETON_PROPERTY
+     * Elle permet d'intiialiser les éléements graphiques du composant avec le modele.
+     * @param aModel 
+     */
+    private void registerModel(GridModel aModel) {
+        model = aModel;
+        this.model.addPropertyChangeListener(GridModel.JETON_PROPERTY, gridPropertyChangeListener);
+        updateMorpion(model);
+    }
+
+    /**
+     * Méthode de initialisation des layouts afin d'organiser le composant
+     */
+    private void initPanel() {
+        this.setLayout(new GridLayout(DEFAULT_SIZE_COL, DEFAULT_SIZE_COL, 3, 3));
+        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    }
+    
+    /**
+     * 
+     * @return la dimension preferée du composant
+     */
+    public Dimension getPreferredSize() {
+        return new Dimension(300, 300);
+    }
+    
+    /**
+     * Méthode permettant d'ordonner la liste afin d'assurer le bon placement 
+     * de chacun des éléments dans la grille du morption
+     * @param l : la liste à ordonner
+     * @return la liste ordonnée
+     */
     private List<JetonModel> ordonnerListe(List<JetonModel> l){
         List<JetonModel> listResult = new ArrayList<>();
         
@@ -71,6 +112,10 @@ public class Morpion extends JComponent {
         return listResult;
     }
     
+    /**
+     * Methode de mise à jour du composant en fonction du modele passé en parametre.
+     * @param grid : Le modele à utiliser pour mettre à jour la fenetre
+     */
     private void updateMorpion(GridModel newGrid) {
         System.out.println("UpdateMorpion");
 
@@ -103,26 +148,19 @@ public class Morpion extends JComponent {
         repaint();
     }
 
-    public Dimension getPreferredSize() {
-        return new Dimension(300, 300);
-    }
-
+    /**
+     *
+     * @return le modele de l'application
+     */
     public GridModel getModel() {
         return model;
     }
 
+    /**
+     * Affecte le modele passé en parametre 
+     * @param model : le modele à enregistrer dans l'application
+     */
     public void setModel(GridModel model) {
         registerModel(model);
-    }
-
-    private void registerModel(GridModel aModel) {
-        model = aModel;
-        this.model.addPropertyChangeListener(GridModel.JETON_PROPERTY, gridPropertyChangeListener);
-        updateMorpion(model);
-    }
-
-    private void initPanel() {
-        this.setLayout(new GridLayout(DEFAULT_SIZE_COL, DEFAULT_SIZE_COL, 3, 3));
-        this.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
     }
 }

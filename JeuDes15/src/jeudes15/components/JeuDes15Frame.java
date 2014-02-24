@@ -21,7 +21,7 @@ public class JeuDes15Frame extends javax.swing.JFrame {
     private GridModel model;
 
     /**
-     * Creates new form JeuDes15Frame
+     * Constructeur par defaut de JeuDes15Frame
      */
     public JeuDes15Frame() {
 
@@ -38,7 +38,8 @@ public class JeuDes15Frame extends javax.swing.JFrame {
     }
 
     /**
-     * Creates new form JeuDes15Frame
+     * Constructeur parametré avec un modele de JeuDes15Frame
+     * @param modelCible : le modele utilisé par la frame
      */
     public JeuDes15Frame(GridModel modelCible) {
 
@@ -54,14 +55,25 @@ public class JeuDes15Frame extends javax.swing.JFrame {
         initFrame();
     }
 
+    /**
+     *
+     * @return le modele
+     */
     public GridModel getModel() {
         return model;
     }
 
+    /**
+     *
+     * @param model : modele à affecter au modele de la frame
+     */
     public void setModel(GridModel model) {
         this.model = model;
     }
-
+    /**
+     * Traitement associé à la reception d'un changement de type END_GAME. Permet d'afficher la popup de fin de jeu
+     * @param newGrid : le modele du jeu
+     */
     private void updateJeuDes15(GridModel newGrid) {
         if (newGrid.isThereAWinner()) {
             createPopUpFinJeu("Le vainqueur est le joueur " + newGrid.whoIsTheWinner());
@@ -69,7 +81,10 @@ public class JeuDes15Frame extends javax.swing.JFrame {
             createPopUpFinJeu("Pas de vainqueur.");
         }
     }
-
+    /**
+     * Crée et affiche la popup affichant les infos de fin de jeu et le traitement associé à chaque choix sur la popup
+     * @param msgFin : Le message de fin de la pop up
+     */
     private void createPopUpFinJeu(String msgFin) {
         Object[] options = {"Rejouer",
             "Annuler"};
@@ -189,11 +204,12 @@ public class JeuDes15Frame extends javax.swing.JFrame {
     private jeudes15.components.Morpion morpion1;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Méthode d'initialisation des elements graphiques.
+     */
     private void initFrame() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        classicView1 = new jeudes15.components.ClassicView();
-        morpion1 = new jeudes15.components.Morpion();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mi_NewGame = new javax.swing.JMenuItem();

@@ -23,7 +23,7 @@ import jeudes15.models.JetonModel;
  */
 public class ClassicView extends JComponent {
 
-   private Token temp;
+    private Token temp;
     private JPanel panelJetons;
     private JPanel panelJoueurs;
     private JPanel panelJoueur1;
@@ -31,10 +31,17 @@ public class ClassicView extends JComponent {
     private GridModel model;
     private PropertyChangeListener gridPropertyChangeListener;
 
+    /**
+     * Constructeur par défaut
+     */
     public ClassicView() {
         this(new GridModel());
     }
 
+    /**
+     * Construcuteur permettant d'initialiser le composant avec le modele passé en parametre.
+     * @param model
+     */
     public ClassicView(GridModel model) {
 
         panelJetons = new JPanel();
@@ -53,17 +60,63 @@ public class ClassicView extends JComponent {
         registerModel(model);
         initPanels();
     }
-
+    /**
+     * Méthode d'enregistrement du model dans le composant et d'abonnement à la proprieté JETON_PROPERTY
+     * Elle permet d'intiialiser les éléements graphiques du composant avec le modele.
+     * @param aModel 
+     */
     private void registerModel(GridModel aModel) {
         model = aModel;
         this.model.addPropertyChangeListener(GridModel.JETON_PROPERTY, gridPropertyChangeListener);
         updateClassicView(model);
-    }
+    } 
+    /**
+     * Méthode de construction et de dispositions des différents éléments graphiques du composant
+     */
+    private void initPanels() {
+        this.setLayout(new GridLayout(2, 1, 3, 3));
 
+        // Panel Jetons (Haut)
+
+        panelJetons.setLayout(new GridLayout(1, 9, 2, 2));
+        /* for(int i=0;i < 9;i++){
+         temp = new Token(listModels.get(i), Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
+         panelJetons.add(temp);
+         }*/
+
+
+        // Panel choix joueurs (bas)
+
+        panelJoueur1.setLayout(new GridLayout(1, 5, 2, 2));
+        panelJoueur2.setLayout(new GridLayout(1, 5, 2, 2));
+
+        // Bordure sur les panels Joueur1 et Joueur2
+
+        panelJoueur1.setBorder(new TitledBorder("Player 1 Tokens"));
+        panelJoueur2.setBorder(new TitledBorder("Player 2 Tokens"));
+
+        // Panel principal des jetons sélectionnés
+        panelJoueurs.setLayout(new GridLayout(1, 2, 2, 2));
+
+        panelJoueurs.add(panelJoueur1);
+        panelJoueurs.add(panelJoueur2);
+
+        //Ajout au composant
+        this.add(panelJetons);
+        this.add(panelJoueurs);
+    }
+    
+    /**
+     * 
+     * @return la dimension preferée du composant
+     */
     public Dimension getPreferredSize() {
         return new Dimension(500, 200);
     }
-
+    /**
+     * Methode de mise à jour du composant en fonction du modele passé en parametre.
+     * @param grid : Le modele à utiliser pour mettre à jour la fenetre
+     */
     private void updateClassicView(GridModel grid) {
         System.out.println("UpdateClassicView");
         
@@ -133,44 +186,19 @@ public class ClassicView extends JComponent {
 
     }
 
+    /**
+     * 
+     * @return le modele de l'application
+     */
     public GridModel getModel() {
         return model;
     }
 
+    /**
+     * Affecte le modele passé en parametre 
+     * @param model : le modele à enregistrer dans l'application
+     */
     public void setModel(GridModel model) {
         registerModel(model);
-    }
-
-    private void initPanels() {
-        this.setLayout(new GridLayout(2, 1, 3, 3));
-
-        // Panel Jetons (Haut)
-
-        panelJetons.setLayout(new GridLayout(1, 9, 2, 2));
-        /* for(int i=0;i < 9;i++){
-         temp = new Token(listModels.get(i), Color.green, TokenState.NOT_SELECTED, Shape.OVALE);
-         panelJetons.add(temp);
-         }*/
-
-
-        // Panel choix joueurs (bas)
-
-        panelJoueur1.setLayout(new GridLayout(1, 5, 2, 2));
-        panelJoueur2.setLayout(new GridLayout(1, 5, 2, 2));
-
-        // Bordure sur les panels Joueur1 et Joueur2
-
-        panelJoueur1.setBorder(new TitledBorder("Player 1 Tokens"));
-        panelJoueur2.setBorder(new TitledBorder("Player 2 Tokens"));
-
-        // Panel principal des jetons sélectionnés
-        panelJoueurs.setLayout(new GridLayout(1, 2, 2, 2));
-
-        panelJoueurs.add(panelJoueur1);
-        panelJoueurs.add(panelJoueur2);
-
-        //Ajout au composant
-        this.add(panelJetons);
-        this.add(panelJoueurs);
     }
 }

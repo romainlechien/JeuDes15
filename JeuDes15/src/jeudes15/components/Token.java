@@ -29,12 +29,7 @@ import static jeudes15.models.TokenState.PLAYER2_SELECTED;
  */
 public class Token extends JLayeredPane {
 
-    public static final String BACKGROUND_COLOR_PROPERTY = "backgroundColor";
-    public static final String TEXT_PROPERTY = "text";
-    public static final String COLOR_PROPERTY = "color";
-    public static final String STATE_PROPERTY = "state";
-    public static final String VALUE_PROPERTY = "value";
-    
+    // Taille du texte utilisé dans le composant
     private static final int DEFAULT_SIZE_TEXT = 36;
     
     private static final int DEFAULT_SHAPE = Shape.OVALE;
@@ -48,28 +43,36 @@ public class Token extends JLayeredPane {
     private int sizeText;
     private final Shape shape;
     private final Shape armedShape;
-    private final EventListenerList listeners;
     private int value;
     private Color color;
     private TokenState state;
     private JetonModel model;
 
-    public static final Dimension PREFERRED_SIZE = new Dimension(70, 70);
-
+    /**
+     * Constructeur par défaut
+     */
     public Token() {
         this(new JetonModel(DEFAULT_PIECE_VALUE), DEFAULT_SHAPE);
     }
     
-     public Token(JetonModel model) {
+     /**
+     * Constructeur prenant en parametre le modele utilisé dans le jeton
+     * @param model : le modele du jeton
+     */
+    public Token(JetonModel model) {
         this(model,DEFAULT_SHAPE);
     }
     
+    /**
+     * Constructeur parametré avec le modele et la forme à utiliser
+     * @param model : le modele du jeton
+     * @param shapePick : la forme
+     */
     public Token(JetonModel model, int shapePick) {
         super();
         this.model = model;
         this.value = this.model.getValue();
         this.state = this.model.getState();
-        listeners = new EventListenerList();
         label = new JLabel(new Integer(value).toString());
         shape = new Shape(shapePick,Color.red);
         sizeText = DEFAULT_SIZE_TEXT;
@@ -91,47 +94,6 @@ public class Token extends JLayeredPane {
         
         shape.setColor(color);
 
-        label.addPropertyChangeListener("state", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-                firePropertyChange(STATE_PROPERTY, pce.getOldValue(), pce.getNewValue());
-            }
-        });
-
-        shape.addPropertyChangeListener("color", new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent pce) {
-                        armedShape.setColor(((Color)pce.getNewValue()).darker());
-
-                firePropertyChange(BACKGROUND_COLOR_PROPERTY, pce.getOldValue(), pce.getNewValue());
-            }
-        });
-
-        addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseExited(MouseEvent me) {
-                setArmed(false);
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent me) {
-                setArmed(true);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent me) {
-                setPressed(true);
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent me) {
-//                fireShapeLabelClicked(new TokenEvent(Token.this));
-            }
-        });
-
         updateColor();
         add(shape, JLayeredPane.DEFAULT_LAYER);
         add(label, JLayeredPane.DRAG_LAYER);
@@ -146,18 +108,34 @@ public class Token extends JLayeredPane {
         armedShape.setBounds(0, 0, w, h);
     }
 
+    /**
+     * 
+     * @param text
+     */
     public void setText(String text) {
         label.setText(text);
     }
 
+    /**
+     *
+     * @return le texte du jeton
+     */
     public String getText() {
         return label.getText();
     }
 
+    /**
+     *
+     * @param backgroundColor
+     */
     public void setBackgroundColor(Color backgroundColor) {
         shape.setColor(backgroundColor);
     }
 
+    /**
+     *
+     * @return la couleur de fond du jeton
+     */
     public Color getBackgroundColor() {
         return shape.getColor();
     }
@@ -168,28 +146,6 @@ public class Token extends JLayeredPane {
                 Math.max(shape.getPreferredSize().width, label.getPreferredSize().width),
                 Math.max(shape.getPreferredSize().height, label.getPreferredSize().height));
     }
-
-    private void setArmed(boolean b) {
-        armedShape.setVisible(b);
-    }
-
-    private void setPressed(boolean b) {
-    }
-
-   /* private void fireShapeLabelClicked(TokenEvent shapeLabelEvent) {
-        for (TokenListener listener : listeners.getListeners(TokenListener.class)) {
-          listener.shapeLabelClicked(shapeLabelEvent);
-        }
-    }
-
-    public void addShapeLabelListener(TokenListener listener) {
-        listeners.add(TokenListener.class, listener);
-    }
-
-    public void removeShapeLabelListener(TokenListener listener) {
-        listeners.remove(TokenListener.class, listener);
-    }
-    */
     
     private void fireActionPerformed() {
             ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "");
@@ -198,10 +154,18 @@ public class Token extends JLayeredPane {
             }
         }
     
-        public void addActionListener(ActionListener listener) {
+        /**
+     *
+     * @param listener
+     */
+    public void addActionListener(ActionListener listener) {
         this.listenerList.add(ActionListener.class, listener);
     }
 
+    /**
+     *
+     * @param listener
+     */
     public void removeActionListener(ActionListener listener) {
         this.listenerList.remove(ActionListener.class, listener);
     }
@@ -211,6 +175,9 @@ public class Token extends JLayeredPane {
         return shape.contains(x, y);
     }
 
+    /**
+     * Methode mettant à jour la couleur du jeton et de son ecriture en fonction des états.
+     */
     private void updateColor() {
         switch(state){
             case NOT_SELECTED : 

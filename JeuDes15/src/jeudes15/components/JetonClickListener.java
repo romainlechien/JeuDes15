@@ -21,6 +21,11 @@ public class JetonClickListener implements ActionListener {
     private final EventListenerList eventListeners;
     private final GridModel model;
     
+    /**
+     * Constructeur des evenements sur les jetons.
+     * @param model : Le modele général de l'application
+     * @param jetonNumber : la valeur du jeton
+     */
     JetonClickListener(GridModel model, int jetonNumber) {
         this.model = model;
         this.jetonNumber = jetonNumber;
@@ -35,7 +40,11 @@ public class JetonClickListener implements ActionListener {
             Logger.getLogger(JetonClickListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    /**
+     * Traitement associé à un clic
+     * @param jetonNumber : la valeur du jeton
+     * @throws Exception 
+     */
     private void firePieceClicked(int jetonNumber) throws Exception {
         model.setJetonSelected(jetonNumber);
         GridEvent event = new GridEvent(this, jetonNumber);
@@ -45,10 +54,18 @@ public class JetonClickListener implements ActionListener {
 
     }
     
+    /**
+     *
+     * @param listener
+     */
     public void addGridListener(GridListener listener) {
         eventListeners.add(GridListener.class, listener);
     }
     
+    /**
+     *
+     * @param listener
+     */
     public void removeGridListener(GridListener listener) {
         eventListeners.remove(GridListener.class, listener);
     }

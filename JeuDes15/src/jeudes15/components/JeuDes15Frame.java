@@ -13,7 +13,7 @@ import jeudes15.models.JetonModel;
 
 /**
  *
- * @author duboisem
+ * @author Emilien Dubois et Romain Lechien
  */
 public class JeuDes15Frame extends javax.swing.JFrame {
 

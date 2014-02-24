@@ -15,7 +15,7 @@ import javax.swing.JComponent;
 
 /**
  *
- * @author David
+ * @author Emilien Dubois et Romain Lechien
  */
 public class Shape extends JComponent {
 

@@ -9,7 +9,7 @@ import jeudes15.components.JeuDes15Frame;
 
 /**
  *
- * @author duboisem
+ * @author Emilien Dubois et Romain Lechien
  */
 public class MainTwoWindows {
 

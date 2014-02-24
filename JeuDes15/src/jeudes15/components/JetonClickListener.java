@@ -13,7 +13,7 @@ import jeudes15.models.GridModel;
 
 /**
  *
- * @author duboisem
+ * @author Emilien Dubois et Romain Lechien
  */
 public class JetonClickListener implements ActionListener {
     

@@ -8,7 +8,7 @@ import jeudes15.components.JeuDes15Frame;
 
 /**
  *
- * @author lechiero
+ * @author Emilien Dubois et Romain Lechien
  */
 public class Main extends javax.swing.JFrame {
 

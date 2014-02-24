@@ -13,16 +13,34 @@ import java.util.ArrayList;
 
 /**
  *
- * @author duboisem
+ * @author Emilien Dubois et Romain Lechien
  */
 public class GridModel {
 
+    /**
+     *
+     */
     public static final int DEFAULT_GRID_NB_ITEMS = 9;
+    /**
+     *
+     */
     public static final int DEFAULT_BEGINNER_PLAYER = 1;
+    /**
+     *
+     */
     public static final boolean DEFAULT_ENABLED = true;
     private static final Logger LOG = Logger.getLogger(GridModel.class.getName());
+    /**
+     *
+     */
     public static final String ENABLED_PROPERTY = "enabled";
+    /**
+     *
+     */
     public static final String JETON_PROPERTY = "jeton";
+    /**
+     *
+     */
     public static final String ENDGAME_PROPERTY = "findujeu";
     private final PropertyChangeSupport support;
     private List<JetonModel> jetons;
@@ -33,14 +51,26 @@ public class GridModel {
     private List<Integer> combiGagnante;
     private boolean popUpEndGame;
 
+    /**
+     *
+     */
     public GridModel() {
         this(DEFAULT_GRID_NB_ITEMS);
     }
 
+    /**
+     *
+     * @param nbitems
+     */
     public GridModel(int nbitems) {
         this(nbitems, DEFAULT_ENABLED);
     }
 
+    /**
+     *
+     * @param nbitems
+     * @param theEnabled
+     */
     public GridModel(int nbitems, boolean theEnabled) {
 
         jetons = new ArrayList<>(nbitems);
@@ -56,6 +86,10 @@ public class GridModel {
         newGame();
     }
 
+    /**
+     *
+     * @param m
+     */
     public GridModel(GridModel m) {
         this.support = m.support;
         this.jetons = m.jetons;
@@ -66,6 +100,10 @@ public class GridModel {
         combiGagnante = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Integer> getPlayer1SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
 
@@ -75,6 +113,10 @@ public class GridModel {
         return selectedJetons;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Integer> getPlayer2SelectedJetons() {
         List<Integer> selectedJetons = new ArrayList<>();
 
@@ -84,11 +126,19 @@ public class GridModel {
         return selectedJetons;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isThereAWinner() {
         setWinner();
         return (winner != 0);
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isThereAnEquality() {
 
         List<Integer> selectedJetons = new ArrayList<>();
@@ -102,10 +152,17 @@ public class GridModel {
         return (winner == 0 && selectedJetons.size() == 9);
     }
 
+    /**
+     *
+     * @return
+     */
     public int whoIsTheWinner() {
         return winner;
     }
 
+    /**
+     *
+     */
     public void setWinner() {
 
         boolean gagne = false;
@@ -154,6 +211,11 @@ public class GridModel {
         return (get.getValue() + get0.getValue() + get1.getValue());
     }
 
+    /**
+     *
+     * @param value
+     * @throws Exception
+     */
     public void setJetonSelected(int value) throws Exception {
         GridModel oldModel = null;
         GridModel newModel = null;
@@ -194,34 +256,67 @@ public class GridModel {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public List<JetonModel> getJetons() {
         return jetons;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<JetonModel> getJetonsPlayer1() {
         return jetonsPlayer1;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<JetonModel> getJetonsPlayer2() {
         return jetonsPlayer2;
     }
 
+    /**
+     *
+     * @param pl
+     */
     public void addPropertyChangeListener(PropertyChangeListener pl) {
         support.addPropertyChangeListener(pl);
     }
 
+    /**
+     *
+     * @param pl
+     */
     public void removePropertyChangeListener(PropertyChangeListener pl) {
         support.removePropertyChangeListener(pl);
     }
 
+    /**
+     *
+     * @param string
+     * @param pl
+     */
     public void addPropertyChangeListener(String string, PropertyChangeListener pl) {
         support.addPropertyChangeListener(string, pl);
     }
 
+    /**
+     *
+     * @param string
+     * @param pl
+     */
     public void removePropertyChangeListener(String string, PropertyChangeListener pl) {
         support.removePropertyChangeListener(string, pl);
     }
 
+    /**
+     *
+     */
     public void newGame() {
 
         GridModel oldModel = null;
@@ -243,14 +338,26 @@ public class GridModel {
         support.firePropertyChange(JETON_PROPERTY, oldModel, newModel);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Integer> getCombiGagnante() {
         return combiGagnante;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isPopUpEndGameDisplayed(){
         return popUpEndGame;
     }
     
+    /**
+     *
+     * @param val
+     */
     public void setPopUpEndGameDisplayed(boolean val){
         popUpEndGame = val;
     }

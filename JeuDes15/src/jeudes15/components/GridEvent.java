@@ -8,7 +8,7 @@ import java.util.EventObject;
 
 /**
  *
- * @author duboisem
+ * @author Emilien Dubois et Romain Lechien
  */
 public class GridEvent extends EventObject {
     private static final long serialVersionUID = 1L;

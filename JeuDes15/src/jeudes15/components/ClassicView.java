@@ -25,7 +25,7 @@ import jeudes15.models.TokenState;
 
 /**
  *
- * @author lechiero
+ * @author Emilien Dubois et Romain Lechien
  */
 public class ClassicView extends JComponent {
 

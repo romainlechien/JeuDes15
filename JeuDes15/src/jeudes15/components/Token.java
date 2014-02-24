@@ -25,7 +25,7 @@ import static jeudes15.models.TokenState.PLAYER2_SELECTED;
 
 /**
  *
- * @author David
+ * @author Emilien Dubois et Romain Lechien
  */
 public class Token extends JLayeredPane {
 

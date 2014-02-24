@@ -8,7 +8,7 @@ import java.util.EventListener;
 
 /**
  *
- * @author duboisem
+ * @author Emilien Dubois et Romain Lechien
  */
 public interface GridListener extends EventListener {
     public void gridClicked(GridEvent event);
